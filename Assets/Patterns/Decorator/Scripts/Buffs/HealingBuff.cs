@@ -5,10 +5,14 @@ using UnityEngine;
 
 namespace Patterns.Decorator.BuffsLogic
 {
-    [CreateAssetMenu(fileName = "HealingBuff_", menuName = "ScriptableObjects/Healing Buff", order = 2)]
     public class HealingBuff : Buff
     {
         public int Healing;
+
+        public HealingBuff(int healing)
+        {
+            Healing = healing;
+        }
 
         protected override void ApplyBuffToAlive(IAlive aliveTarget)
         {

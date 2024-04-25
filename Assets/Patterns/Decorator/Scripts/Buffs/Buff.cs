@@ -5,9 +5,9 @@ using UnityEngine;
 
 namespace Patterns.Decorator.BuffsLogic
 {
-    public abstract class Buff : ScriptableObject
+    public abstract class Buff
     {
-        public int ActiveSeconds;
+        public int ActiveSeconds = 3;
 
         public bool IsActive => ActiveSeconds > 0;
 

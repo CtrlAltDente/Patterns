@@ -5,10 +5,13 @@ using UnityEngine;
 
 namespace Patterns.Decorator.SpellsLogic
 {
-    [CreateAssetMenu(fileName = "HealingSpell_", menuName = "ScriptableObjects/Healing Spell", order = 0)]
     public class HealingSpell : Spell
     {
         public int Healing;
+
+        public HealingSpell(Spell spell) : base(spell)
+        {
+        }
 
         protected override void ApplySpellToAlive(IAlive aliveTarget)
         {

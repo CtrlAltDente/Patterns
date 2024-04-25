@@ -1,3 +1,4 @@
+using Patterns.Decorator.BuffsLogic;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,17 +11,23 @@ namespace Patterns.Decorator.SpellsLogic
         private Transform _target;
 
         [SerializeField]
-        private Spell[] _spells;
-
-        [SerializeField]
         private SpellObject _spellObjectPrefab;
 
         [SerializeField]
         private SpellObject _spellObject;
 
+        private Spell _spell;
+
         private void Start()
         {
             ResetSpell();
+        }
+
+        public void CastTheSpell()
+        {
+            _spellObject.Spell = _spell;
+            _spellObject.CastSpellObject(_target);
+            _spellObject.OnDestroyAction += ResetSpell;
         }
 
         public void ResetSpell()
@@ -33,21 +40,31 @@ namespace Patterns.Decorator.SpellsLogic
             _spellObject = null;
             _spellObject = Instantiate(_spellObjectPrefab, Vector3.up, Quaternion.identity);
 
-            foreach(Spell spell in _spells)
-            {
-                spell.ClearSpell();
-            }
+            _spell = new Spell();
         }
 
-        public void AddSpell(Spell spell)
+        public void AddDamageSpell(int damage)
         {
-            spell.SetSpell(_spellObject.Spell);
-            _spellObject.Spell = spell;
+            DamageSpell spell = new DamageSpell(_spell);
+            spell.Damage = damage;
+            _spell = spell;
         }
 
-        public void CastTheSpell()
+        public void AddHealingSpell(int healing)
         {
-            _spellObject.CastSpellObject(_target);
+            HealingSpell spell = new HealingSpell(_spell);
+            spell.Healing = healing;
+            _spell = spell;
+        }
+
+        public void AddDamageBuff(int damage)
+        {
+            _spell.AddBuff(new DamageBuff(damage));
+        }
+
+        public void AddHealingBuff(int healing)
+        {
+            _spell.AddBuff(new HealingBuff(healing));
         }
     }
 }

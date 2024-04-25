@@ -5,10 +5,14 @@ using UnityEngine;
 
 namespace Patterns.Decorator.BuffsLogic
 {
-    [CreateAssetMenu(fileName = "DamageBuff_", menuName = "ScriptableObjects/Damage Buff", order = 3)]
     public class DamageBuff : Buff
     {
         public int Damage;
+
+        public DamageBuff(int damage)
+        {
+            Damage = damage;
+        }
 
         protected override void ApplyBuffToAlive(IAlive aliveTarget)
         {

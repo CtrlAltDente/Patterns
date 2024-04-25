@@ -7,17 +7,27 @@ using UnityEngine;
 
 namespace Patterns.Decorator.SpellsLogic
 {
-    public abstract class Spell : ScriptableObject
+    public class Spell
     {
         [SerializeField]
         private List<Buff> Buffs = new List<Buff>();
 
+
         [SerializeField]
         protected Spell _spell;
 
-        public void SetSpell(Spell spell)
+        public Spell()
+        {
+        }
+
+        public Spell(Spell spell)
         {
             _spell = spell;
+        }
+
+        public void AddBuff(Buff buff)
+        {
+            Buffs.Add(buff);
         }
 
         public void ApplyToAlive(IAlive aliveTarget)
@@ -45,6 +55,8 @@ namespace Patterns.Decorator.SpellsLogic
             }
         }
 
-        protected abstract void ApplySpellToAlive(IAlive aliveTarget);
+        protected virtual void ApplySpellToAlive(IAlive aliveTarget)
+        {
+        }
     }
 }

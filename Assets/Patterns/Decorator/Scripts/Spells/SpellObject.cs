@@ -8,9 +8,13 @@ namespace Patterns.Decorator.SpellsLogic
 {
     public class SpellObject : MonoBehaviour
     {
+        public Action OnDestroyAction;
+
+
+
         public Spell Spell;
 
-        public void OnCollisionEnter(Collision collision)
+        private void OnCollisionEnter(Collision collision)
         {
             try
             {
@@ -23,6 +27,11 @@ namespace Patterns.Decorator.SpellsLogic
             }
 
             Destroy(gameObject);
+        }
+
+        private void OnDestroy()
+        {
+            OnDestroyAction?.Invoke();
         }
 
         public void CastSpellObject(Transform target)
